@@ -128,7 +128,7 @@ WorkForce-HR-Playwright-Automation/
 ### 2. Clone Repository & Setup Virtual Environment
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/WorkForce-HR-Playwright-Automation.git
+git clone https://github.com/your-DJPATEL001/Employee-Management-System-Playwright-Automation.git
 cd WorkForce-HR-Playwright-Automation
 
 # Create Python virtual environment
