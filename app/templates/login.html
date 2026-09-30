@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WorkForce HR</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="login-wrapper">
+
+    <div class="login-card">
+        <div class="login-header">
+            <h1>WorkForce <span style="color: #2563eb;">HR</span></h1>
+            <p>Sign in to access your Employee Portal</p>
+        </div>
+
+        {% if error_msg %}
+        <div class="alert alert-danger" data-testid="error-message">
+            {{ error_msg }}
+        </div>
+        {% endif %}
+
+        {% if success_msg %}
+        <div class="alert alert-success" data-testid="success-message">
+            {{ success_msg }}
+        </div>
+        {% endif %}
+
+        <form action="/login" method="POST" id="login-form" novalidate>
+            <div class="form-group" style="margin-bottom: 1.2rem;">
+                <label for="email">Email Address</label>
+                <input type="text" id="email" name="email" class="form-control" placeholder="admin@workforce.test" value="{{ email or '' }}" data-testid="login-email">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" data-testid="login-password">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;" data-testid="login-button">
+                Login
+            </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.8rem; color: #64748b;">
+            <p><strong>Test Demo Accounts:</strong></p>
+            <p>Admin: admin@workforce.test | Admin@12345</p>
+            <p>HR: hr@workforce.test | HR@12345</p>
+            <p>Employee: employee@workforce.test | Employee@12345</p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - WorkForce HR{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Admin Dashboard</h1>
+        <p style="color: #64748b;">Overview of organizational metrics and recent employees</p>
+    </div>
+    {% if user.role in ['Admin', 'HR Manager'] %}
+    <a href="/employees/add" class="btn btn-primary" data-testid="add-employee-button">+ Add Employee</a>
+    {% endif %}
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-title">Total Employees</div>
+        <div class="stat-value" data-testid="stat-total-employees">{{ total_employees }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-title">Active Employees</div>
+        <div class="stat-value" style="color: #16a34a;" data-testid="stat-active-employees">{{ active_employees }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-title">Inactive Employees</div>
+        <div class="stat-value" style="color: #dc2626;" data-testid="stat-inactive-employees">{{ inactive_employees }}</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-title">Departments</div>
+        <div class="stat-value" style="color: #9333ea;" data-testid="stat-departments">{{ total_departments }}</div>
+    </div>
+</div>
+
+<div class="card-table">
+    <div style="padding: 1.25rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 1.2rem; font-weight: 700;">Recent Employees</h2>
+        <a href="/employees" style="color: #2563eb; text-decoration: none; font-weight: 600; font-size: 0.9rem;">View All Employees &rarr;</a>
+    </div>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Position</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in recent_employees %}
+                <tr data-testid="recent-employee-row-{{ emp.id }}">
+                    <td><strong>{{ emp.employee_code }}</strong></td>
+                    <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                    <td>{{ emp.email }}</td>
+                    <td>{{ emp.department }}</td>
+                    <td>{{ emp.position }}</td>
+                    <td>
+                        <span class="badge {% if emp.status == 'Active' %}badge-active{% else %}badge-inactive{% endif %}">
+                            {{ emp.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

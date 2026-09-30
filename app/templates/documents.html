@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Document Hub - WorkForce HR{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Document Repository</h1>
+        <p style="color: #64748b;">Centralized employee documentation and records</p>
+    </div>
+</div>
+
+<div class="card-table" data-testid="documents-hub">
+    <div class="table-responsive">
+        <table data-testid="documents-table">
+            <thead>
+                <tr>
+                    <th>Document Name</th>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>File Type</th>
+                    <th>Uploaded Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                <tr data-testid="document-hub-item">
+                    <td><strong>{{ doc.file_name }}</strong></td>
+                    <td>{{ doc.employee.employee_code if doc.employee else 'N/A' }}</td>
+                    <td>{{ doc.employee.first_name }} {{ doc.employee.last_name }}</td>
+                    <td><span class="badge" style="background: #e0f2fe; color: #0369a1;">{{ doc.file_type }}</span></td>
+                    <td>{{ doc.uploaded_at.strftime('%Y-%m-%d %H:%M') if doc.uploaded_at else '' }}</td>
+                    <td>
+                        <a href="/{{ doc.file_path }}" target="_blank" class="btn btn-secondary btn-sm" data-testid="download-doc-hub">View File</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center; color: #64748b; padding: 2rem;">No documents found in repository.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

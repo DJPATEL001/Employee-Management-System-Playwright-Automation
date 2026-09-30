@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WorkForce HR - Employee Management System{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+    {% if user %}
+    <header class="navbar">
+        <a href="/dashboard" class="navbar-brand">
+            WorkForce <span>HR</span>
+        </a>
+
+        <ul class="navbar-nav">
+            {% if user.role in ['Admin', 'HR Manager'] %}
+            <li><a href="/dashboard" class="nav-link" data-testid="nav-dashboard">Dashboard</a></li>
+            <li><a href="/employees" class="nav-link" data-testid="nav-employees">Employees</a></li>
+            <li><a href="/employees/add" class="nav-link" data-testid="nav-add-employee">Add Employee</a></li>
+            {% endif %}
+            <li><a href="/documents" class="nav-link" data-testid="nav-documents">Documents</a></li>
+            <li><a href="/profile" class="nav-link" data-testid="nav-profile">Profile</a></li>
+        </ul>
+
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 0.9rem; font-weight: 500;">
+                {{ user.name }} <span class="user-badge">{{ user.role }}</span>
+            </span>
+            <a href="/logout" class="btn-logout" data-testid="nav-logout" data-testid-logout="logout-button">Logout</a>
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="container">
+        {% if success_msg %}
+        <div class="alert alert-success" data-testid="success-message">
+            {{ success_msg }}
+        </div>
+        {% endif %}
+
+        {% if error_msg %}
+        <div class="alert alert-danger" data-testid="error-message">
+            {{ error_msg }}
+        </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2026 WorkForce HR — End-to-End Employee Management System
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "valid_new_employee": {
+    "first_name": "Marcus",
+    "last_name": "Vance",
+    "email": "marcus.vance@workforce.test",
+    "phone": "9876501234",
+    "department": "Engineering",
+    "position": "Staff Automation Architect",
+    "joining_date": "2024-01-15",
+    "salary": "115000",
+    "status": "Active",
+    "address": "500 Innovation Way, Tech City, CA"
+  },
+  "invalid_employees": {
+    "missing_first_name": {
+      "first_name": "",
+      "last_name": "Smith",
+      "email": "smith@workforce.test",
+      "phone": "9876543210",
+      "department": "HR",
+      "position": "Recruiter",
+      "joining_date": "2024-01-01",
+      "salary": "60000",
+      "status": "Active",
+      "address": "123 Main St"
+    },
+    "bad_email": {
+      "first_name": "Bad",
+      "last_name": "Email",
+      "email": "bademailformat",
+      "phone": "9876543210",
+      "department": "Sales",
+      "position": "Sales Rep",
+      "joining_date": "2024-01-01",
+      "salary": "50000",
+      "status": "Active",
+      "address": "123 Main St"
+    },
+    "bad_phone": {
+      "first_name": "Short",
+      "last_name": "Phone",
+      "email": "shortphone@workforce.test",
+      "phone": "12345",
+      "department": "Finance",
+      "position": "Analyst",
+      "joining_date": "2024-01-01",
+      "salary": "70000",
+      "status": "Active",
+      "address": "123 Main St"
+    },
+    "bad_salary": {
+      "first_name": "Non",
+      "last_name": "Numeric",
+      "email": "nonnumeric@workforce.test",
+      "phone": "9876543210",
+      "department": "Marketing",
+      "position": "Designer",
+      "joining_date": "2024-01-01",
+      "salary": "NOT_A_NUMBER",
+      "status": "Active",
+      "address": "123 Main St"
+    }
+  }
+}

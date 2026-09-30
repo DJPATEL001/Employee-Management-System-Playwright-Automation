@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}User Profile - WorkForce HR{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">My Profile</h1>
+        <p style="color: #64748b;">Manage your user profile and contact details</p>
+    </div>
+</div>
+
+<div class="form-card" style="max-width: 650px;">
+    <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem;" data-testid="profile-name-header">{{ user.name }}</h2>
+    
+    <div style="margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 6px; border: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">System Role</strong>
+                <span class="user-badge" style="display: inline-block; margin-top: 0.2rem;" data-testid="profile-role">{{ user.role }}</span>
+            </div>
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Email Address</strong>
+                <span style="font-weight: 600;" data-testid="profile-email">{{ user.email }}</span>
+            </div>
+        </div>
+    </div>
+
+    {% if employee %}
+    <form action="/profile" method="POST" data-testid="profile-form">
+        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: #1e293b;">Editable Contact Information</h3>
+        
+        <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone" class="form-control" value="{{ employee.phone }}" data-testid="profile-phone-input">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="address">Residential Address</label>
+            <textarea id="address" name="address" class="form-control" rows="3" data-testid="profile-address-input">{{ employee.address }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" data-testid="update-profile-button">Update Profile</button>
+    </form>
+    {% else %}
+    <p style="color: #64748b; font-size: 0.95rem;">Administrative user profile. Profile contact details managed by system configuration.</p>
+    {% endif %}
+</div>
+{% endblock %}

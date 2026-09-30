@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Employee Profile: {{ employee.first_name }} {{ employee.last_name }} - WorkForce HR{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">{{ employee.first_name }} {{ employee.last_name }}</h1>
+        <p style="color: #64748b;">Employee Code: <strong>{{ employee.employee_code }}</strong> | Joined {{ employee.joining_date }}</p>
+    </div>
+    <div style="display: flex; gap: 0.5rem;">
+        {% if user.role in ['Admin', 'HR Manager'] %}
+        <a href="/employees/{{ employee.id }}/edit" class="btn btn-primary" data-testid="edit-employee">Edit Profile</a>
+        {% endif %}
+        <a href="/employees" class="btn btn-secondary">&larr; Back</a>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;" data-testid="employee-detail-view">
+    <!-- Main Info Card -->
+    <div class="form-card" style="max-width: 100%; margin: 0;">
+        <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Personal & Professional Details</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Full Name</strong>
+                <span style="font-size: 1.05rem; font-weight: 600;" data-testid="detail-name">{{ employee.first_name }} {{ employee.last_name }}</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Email Address</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-email">{{ employee.email }}</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Phone Number</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-phone">{{ employee.phone }}</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Department</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-department">{{ employee.department }}</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Job Position</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-position">{{ employee.position }}</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Employment Status</strong>
+                <span class="badge {% if employee.status == 'Active' %}badge-active{% else %}badge-inactive{% endif %}" data-testid="detail-status">
+                    {{ employee.status }}
+                </span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Salary</strong>
+                <span style="font-size: 1.05rem; font-weight: 600;" data-testid="detail-salary">${{ "%.2f"|format(employee.salary) }} / yr</span>
+            </div>
+
+            <div>
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Joining Date</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-joining-date">{{ employee.joining_date }}</span>
+            </div>
+
+            <div style="grid-column: 1 / -1;">
+                <strong style="color: #64748b; font-size: 0.85rem; display: block;">Residential Address</strong>
+                <span style="font-size: 1.05rem;" data-testid="detail-address">{{ employee.address }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Sidebar -->
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Upload Box (Admin & HR only) -->
+        {% if user.role in ['Admin', 'HR Manager'] %}
+        <div class="form-card" style="max-width: 100%; margin: 0; padding: 1.25rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">Upload Document</h3>
+            <form action="/employees/{{ employee.id }}/upload" method="POST" enctype="multipart/form-data" data-testid="document-upload-form">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                    <label for="file">Select File (PDF, PNG, JPG)</label>
+                    <input type="file" id="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required class="form-control" data-testid="file-upload" data-testid-file="file-upload-input">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" data-testid="upload-button">Upload File</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <!-- Document List -->
+        <div class="form-card" style="max-width: 100%; margin: 0; padding: 1.25rem;" data-testid="document-list">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;">Uploaded Documents</h3>
+            {% if documents %}
+                <ul style="list-style: none;">
+                    {% for doc in documents %}
+                    <li style="padding: 0.75rem 0; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;" data-testid="document-item">
+                        <div>
+                            <strong style="display: block; font-size: 0.9rem;" data-testid="document-name">{{ doc.file_name }}</strong>
+                            <span style="font-size: 0.75rem; color: #64748b;">{{ doc.file_type }} • {{ doc.uploaded_at.strftime('%Y-%m-%d') if doc.uploaded_at else '' }}</span>
+                        </div>
+                        <a href="/{{ doc.file_path }}" target="_blank" class="btn btn-secondary btn-sm" data-testid="download-document">View</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p style="color: #64748b; font-size: 0.9rem;">No documents uploaded yet.</p>
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual Environment
+venv/
+ENV/
+env/
+
+# Environment Variables
+.env
+
+# SQLite Database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Uploaded Media Files
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+
+# Playwright Auth States & Caches
+playwright/.auth/
+automation/playwright/.auth/
+.pytest_cache/
+
+# Reports & Screenshots (Generated Artifacts)
+reports/screenshots/*.png
+reports/traces/*.zip
+reports/playwright_report.html
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
